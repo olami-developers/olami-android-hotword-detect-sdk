@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">olami-android-hotword-detect-sdk</string>
+    <string name="hotwordDetectOnInitializing">關鍵字偵測正在初始化...</string>
+    <string name="hotwordDetectOnDetect">你好，請說出「歐拉蜜」</string>
+    <string name="hotwordOnInitialized">關鍵字偵測已經初始化完畢</string>
+    <string name="hotwordOnHotwordDetect">已經偵測到「歐拉蜜」關鍵字</string>
+    <string name="hotwordDetectSwitch">開啟關鍵字偵測</string>
+    <string name="hotwordDetectIsClose">關鍵字偵測已經關閉</string>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">olami-android-hotword-detect-sdk</string>
+    <string name="hotwordDetectOnInitializing">Hotword detect is initializing...</string>
+    <string name="hotwordDetectOnDetect">Hello, please say the keyword [OLAMI].</string>
+    <string name="hotwordOnInitialized">Hotword detect is initialized.</string>
+    <string name="hotwordOnHotwordDetect">The keyword [OLAMI] is detected.</string>
+    <string name="hotwordDetectSwitch">Hotword detect switch</string>
+    <string name="hotwordDetectIsClose">Hotword detect is close.</string>
+</resources>

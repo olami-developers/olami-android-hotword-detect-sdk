@@ -1,0 +1,1 @@
+include ':examples', ':lib', ':olami-android-hotword-detect-1.0.0.beta'
