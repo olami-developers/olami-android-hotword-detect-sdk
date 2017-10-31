@@ -1,6 +1,6 @@
-# OLAMI Android TTS SDK
+# OLAMI Android Hotword Detection SDK
 
-This is a repository that contains Android SDK and code examples for using OLAMI TTS APIs, an offering within **OLAMI Open AI**. 
+This is a repository that contains Android SDK and code examples for using OLAMI Hotword Detection, an offering within **OLAMI Open AI**. 
 
 OLAMI website and documentation: [http://olami.ai](http://olami.ai)
 
