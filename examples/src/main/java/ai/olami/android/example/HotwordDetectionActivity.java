@@ -216,7 +216,7 @@ public class HotwordDetectionActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onDetect() {
+        public void onStartDetect() {
             String str = getString(R.string.hotwordDetectOnDetect);
 
             displayTextChangeHandler(str);
