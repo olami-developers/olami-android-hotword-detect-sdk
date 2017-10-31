@@ -272,7 +272,7 @@ public class HotwordDetectionActivity extends AppCompatActivity {
     }
 
     /**
-     * Check hardware resource permissions
+     * Check hardware resource permissions.
      */
     private boolean checkDeviceResourcePermissions() {
         // Check if the user agrees to access the microphone
@@ -356,10 +356,8 @@ public class HotwordDetectionActivity extends AppCompatActivity {
         }
     }
 
-    // ============================= 處理Audiorecord ==============================================
     /**
-     * 初始化Audiorecord物件
-     *
+     * Initial AudioRecord
      */
     private void createAudioRecord() {
         int minBufferSize = AudioRecord.getMinBufferSize(
@@ -398,8 +396,7 @@ public class HotwordDetectionActivity extends AppCompatActivity {
     }
 
     /**
-     * 開始錄音
-     *
+     * Start audio recording.
      */
     private void startRecording() {
         if (mAudioRecord == null) {
@@ -412,8 +409,7 @@ public class HotwordDetectionActivity extends AppCompatActivity {
     }
 
     /**
-     * 停止錄音並釋放錄音資源
-     *
+     * Stop audio recording and release resource.
      */
     public void stopAndReleaseAudioRecord() {
         if ((mAudioRecord != null) && (mAudioRecord.getState() != AudioRecord.STATE_UNINITIALIZED)) {
@@ -426,5 +422,4 @@ public class HotwordDetectionActivity extends AppCompatActivity {
         }
         mAudioRecord = null;
     }
-    // ============================= 處理Audiorecord ==============================================
 }
