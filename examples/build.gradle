@@ -8,7 +8,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
-        versionName "20171027"
+        versionName "20171102"
 
         archivesBaseName = "olami-android-hotword-examples"
 
@@ -56,7 +56,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 
-    compile project(':olami-android-hotword-detect-1.0.0.beta2')
+    compile project(':olami-android-hotword-detect-1.0.0.beta3')
 }
 
 // Copy output files to '/bin' after build --------------

@@ -375,24 +375,6 @@ public class HotwordDetectionActivity extends AppCompatActivity {
                     AudioFormat.ENCODING_PCM_16BIT,
                     minBufferSize * 4);
         }
-
-        Log.i(TAG, "AudioRecord select sample rate is : "+ mAudioRecord.getSampleRate());
-
-        // Waiting for AudioRecord initialized
-        int retry = 0;
-        while ((mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED) && (retry < 4)) {
-            sleep(500);
-            retry++;
-        }
-
-        // Check AudioRecord is initialized or not
-        if (mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
-            if (mAudioRecord.getState() == AudioRecord.STATE_UNINITIALIZED) {
-                throw new UnsupportedOperationException("Init AudioRecord failed. Permission issue?");
-            } else {
-                throw new UnknownError("Failed to initialize AudioRecord.");
-            }
-        }
     }
 
     /**
