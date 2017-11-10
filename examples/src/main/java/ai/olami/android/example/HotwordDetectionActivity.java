@@ -45,11 +45,12 @@ public class HotwordDetectionActivity extends AppCompatActivity {
 
     static final String TAG = "HotwordDetectActivity";
 
-    HotwordDetect mHotwordDetect = null;
-    AudioRecord mAudioRecord = null;
+    private HotwordDetect mHotwordDetect = null;
+    private AudioRecord mAudioRecord = null;
 
-    TextView mDisplayText = null;
-    Switch mHotwordDetectSwitch = null;
+    private TextView mDisplayText = null;
+    private Switch mHotwordDetectSwitch = null;
+    private long mDetectedCount = 0;
 
     private static final int REQUEST_EXTERNAL_PERMISSION = 1;
     private static final int REQUEST_MICROPHONE = 3;
@@ -83,6 +84,7 @@ public class HotwordDetectionActivity extends AppCompatActivity {
             createAudioRecord();
 
             try {
+                mDetectedCount = 0;
                 startRecording();
                 initializeHotwordDetection();
                 startHotwordDetection();
@@ -229,10 +231,12 @@ public class HotwordDetectionActivity extends AppCompatActivity {
         public void onHotwordDetect(int hotwordID) {
             String str = getString(R.string.hotwordOnHotwordDetect);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM/dd HH:mm ss");
+            mDetectedCount++;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm ss");
             sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
             String deviceCurrentTime = sdf.format(new Date(System.currentTimeMillis()));
-            str += "...\n"+ deviceCurrentTime;
+            str += "\n >> [ " + mDetectedCount + " ] << " + deviceCurrentTime + "\n";
 
             displayTextChangeHandler(str);
             Log.i(TAG, str);
