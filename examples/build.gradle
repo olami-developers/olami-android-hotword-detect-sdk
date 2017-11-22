@@ -8,7 +8,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
-        versionName "20171121"
+        versionName "20171122"
 
         archivesBaseName = "olami-android-hotword-examples"
 

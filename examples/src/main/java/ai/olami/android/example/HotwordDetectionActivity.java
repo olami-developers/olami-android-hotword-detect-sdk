@@ -19,6 +19,7 @@
 package ai.olami.android.example;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -58,6 +59,11 @@ public class HotwordDetectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
         setContentView(R.layout.activity_main);
 
         mDisplayText = (TextView) findViewById(R.id.displayText);
@@ -73,19 +79,14 @@ public class HotwordDetectionActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    protected void onResume() {
-        super.onResume();
+        hotwordDetectSwitchEnableChangeHandler(false);
 
         Log.i(TAG, "checkPermission = "+ checkDeviceResourcePermissions());
         // Check hardware resource permissions
         if (checkDeviceResourcePermissions()) {
-            createAudioRecord();
-
             try {
                 mDetectedCount = 0;
-                startRecording();
                 initializeHotwordDetection();
                 startHotwordDetection();
             } catch (Exception ex) {
@@ -110,10 +111,11 @@ public class HotwordDetectionActivity extends AppCompatActivity {
      * Initial hotword detection
      */
     private void initializeHotwordDetection() {
-        createAudioRecord();
-        startRecording();
         try {
             if (mHotwordDetect == null) {
+
+                createAudioRecord();
+                startRecording();
 
                 // * Create HotwordDetect instance by the specified AudioRecord object.
                 //   ------------------------------------------------------------------------------
@@ -153,20 +155,16 @@ public class HotwordDetectionActivity extends AppCompatActivity {
                 //   (1) Create AudioRecord object
                 //   (2) Start recording
                 //   (3) Re-assign to the HotwordDetect object.
+
                 createAudioRecord();
                 startRecording();
                 mHotwordDetect.setAudioRecord(mAudioRecord);
 
                 // * Now you can start hotword detection
                 mHotwordDetect.startDetection();
-
-                hotwordDetectSwitchCheckChangeHandler(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        } else {
-            initializeHotwordDetection();
-            startHotwordDetection();
         }
     }
 
@@ -184,7 +182,6 @@ public class HotwordDetectionActivity extends AppCompatActivity {
                 //   the AudioRecord resource will be also released after this method called.
                 mHotwordDetect.stopDetection();
 
-                hotwordDetectSwitchCheckChangeHandler(false);
                 displayTextChangeHandler(getString(R.string.hotwordDetectIsClose));
 
             } catch (Exception ex) {
@@ -205,6 +202,7 @@ public class HotwordDetectionActivity extends AppCompatActivity {
         public void onInitializing() {
             String str = getString(R.string.hotwordDetectOnInitializing);
 
+            hotwordDetectSwitchEnableChangeHandler(false);
             displayTextChangeHandler(str);
             Log.i(TAG, str);
         }
@@ -364,20 +362,44 @@ public class HotwordDetectionActivity extends AppCompatActivity {
      * Initial AudioRecord
      */
     private void createAudioRecord() {
-        int minBufferSize = AudioRecord.getMinBufferSize(
-                44100,
-                AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT);
-
-        stopAndReleaseAudioRecord();
+        if (mAudioRecord != null) {
+            if (mAudioRecord.getState() == AudioRecord.STATE_UNINITIALIZED) {
+                stopAndReleaseAudioRecord();
+            }
+        }
 
         if (mAudioRecord == null) {
+            int minBufferSize = AudioRecord.getMinBufferSize(
+                    44100,
+                    AudioFormat.CHANNEL_IN_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT);
+
             mAudioRecord = new AudioRecord(
                     MediaRecorder.AudioSource.MIC,
                     44100,
                     AudioFormat.CHANNEL_IN_MONO,
                     AudioFormat.ENCODING_PCM_16BIT,
                     minBufferSize * 4);
+
+            // Waiting for AudioRecord initialized
+            int retry = 0;
+            while ((mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED) && (retry < 4)) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                retry++;
+            }
+
+            // Check AudioRecord is initialized or not
+            if (mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
+                if (mAudioRecord.getState() == AudioRecord.STATE_UNINITIALIZED) {
+                    throw new UnsupportedOperationException("Init AudioRecord failed.");
+                } else {
+                    throw new UnknownError("Failed to initialize AudioRecord.");
+                }
+            }
         }
     }
 
@@ -391,6 +413,18 @@ public class HotwordDetectionActivity extends AppCompatActivity {
 
         if (mAudioRecord.getRecordingState() != AudioRecord.RECORDSTATE_RECORDING) {
             mAudioRecord.startRecording();
+
+            // Waiting for AudioRecord Recording
+            int retry = 0;
+            while ((mAudioRecord.getRecordingState()
+                    != AudioRecord.RECORDSTATE_RECORDING) && (retry < 4)) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                retry++;
+            }
         }
     }
 
