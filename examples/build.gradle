@@ -56,7 +56,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 
-    compile 'ai.olami:olami-android-client:2.3.2'
+    compile 'ai.olami:olami-android-client:2.3.3'
     compile project(':olami-android-hotword-detect-1.0.0.beta5')
 }
 
