@@ -57,7 +57,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'ai.olami:olami-android-client:2.3.2'
-    compile project(':olami-android-hotword-detect-1.0.0.beta4')
+    compile project(':olami-android-hotword-detect-1.0.0.beta5')
 }
 
 // Copy output files to '/bin' after build --------------
