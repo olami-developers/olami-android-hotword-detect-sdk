@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('olami-android-hotword-detect-1.1.1.aar'))
