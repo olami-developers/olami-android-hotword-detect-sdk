@@ -1,1 +1,1 @@
-include ':examples', ':lib', ':olami-android-hotword-detect-1.1.0'
+include ':examples', ':lib', ':olami-android-hotword-detect-1.1.1'
